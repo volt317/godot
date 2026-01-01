@@ -501,6 +501,17 @@ void GeometryInstance3D::set_ignore_occlusion_culling(bool p_enabled) {
 bool GeometryInstance3D::is_ignoring_occlusion_culling() {
 	return ignore_occlusion_culling;
 }
+//TODO Volt - make sure this is all set in the header too. default to false
+void Geometry3D::set_gizmo_status(bool p_is)
+{
+	is_a_gizmo = p_is;
+	RS::get_singleton()->instance_geometry_set_flag(get_instance(), RS::INSTANCE_FLAG_IS_A_GIZMO, is_a_gizmo);
+}
+
+bool GeometryInstance3D::is_a_gizmo()
+{
+	return is_a_gizmo;
+}
 
 Ref<TriangleMesh> GeometryInstance3D::generate_triangle_mesh() const {
 	return Ref<TriangleMesh>();

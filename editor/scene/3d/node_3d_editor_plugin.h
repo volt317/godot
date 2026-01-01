@@ -977,6 +977,7 @@ public:
 
 	Transform3D get_gizmo_transform() const { return gizmo.transform; }
 	bool is_gizmo_visible() const;
+	bool is_gizmo() const;
 
 	ToolMode get_tool_mode() const { return tool_mode; }
 	bool are_local_coords_enabled() const { return tool_option_button[Node3DEditor::TOOL_OPT_LOCAL_COORDS]->is_pressed(); }

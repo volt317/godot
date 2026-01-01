@@ -134,6 +134,13 @@ void RenderGeometryInstanceBase::set_cast_double_sided_shadows(bool p_enable) {
 	_mark_dirty();
 }
 
+//TODO Volt - would this be dirty?
+void RenderGeometryInstanceBase::set_is_this_a_gizmo(bool p_gizmo) {
+	data->is_a_gizmo = p_gizmo;
+
+	_mark_dirty();
+}
+
 void RenderGeometryInstanceBase::reset_motion_vectors() {
 }
 

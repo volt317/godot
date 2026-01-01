@@ -1167,15 +1167,15 @@ void RenderForwardClustered::_fill_render_list(RenderListType p_render_list, con
 					scene_state.used_opaque_stencil = true;
 				}
 			} else if (p_pass_mode == PASS_MODE_SHADOW || p_pass_mode == PASS_MODE_SHADOW_DP) {
-				if (surf->flags & GeometryInstanceSurfaceDataCache::FLAG_PASS_SHADOW) {
+				if ((surf->flags & GeometryInstanceSurfaceDataCache::FLAG_PASS_SHADOW) && !(inst->is_a_gizmo())) {
 					rl->add_element(surf);
 				}
 			} else if (p_pass_mode == PASS_MODE_DEPTH_MATERIAL) {
-				if (surf->flags & (GeometryInstanceSurfaceDataCache::FLAG_PASS_DEPTH | GeometryInstanceSurfaceDataCache::FLAG_PASS_OPAQUE | GeometryInstanceSurfaceDataCache::FLAG_PASS_ALPHA)) {
+				if (surf->flags & (GeometryInstanceSurfaceDataCache::FLAG_PASS_DEPTH | GeometryInstanceSurfaceDataCache::FLAG_PASS_OPAQUE | GeometryInstanceSurfaceDataCache::FLAG_PASS_ALPHA) && !(inst->is_a_gizmo())) {
 					rl->add_element(surf);
 				}
 			} else {
-				if (surf->flags & (GeometryInstanceSurfaceDataCache::FLAG_PASS_DEPTH | GeometryInstanceSurfaceDataCache::FLAG_PASS_OPAQUE)) {
+				if (surf->flags & (GeometryInstanceSurfaceDataCache::FLAG_PASS_DEPTH | GeometryInstanceSurfaceDataCache::FLAG_PASS_OPAQUE) && !(inst->is_a_gizmo())) {
 					rl->add_element(surf);
 				}
 			}

@@ -60,6 +60,7 @@ public:
 	virtual void set_lightmap_capture(const Color *p_sh9) = 0;
 	virtual void set_instance_shader_uniforms_offset(int32_t p_offset) = 0;
 	virtual void set_cast_double_sided_shadows(bool p_enable) = 0;
+	virtual void set_is_this_a_gizmo(bool p_enable) = 0;
 
 	virtual void reset_motion_vectors() = 0;
 
@@ -124,6 +125,7 @@ public:
 		bool use_dynamic_gi = false;
 		bool cast_double_sided_shadows = false;
 		bool dirty_dependencies = false;
+		bool is_a_gizmo = false;
 
 		DependencyTracker dependency_tracker;
 	};
@@ -146,6 +148,7 @@ public:
 	virtual void set_use_dynamic_gi(bool p_enable) override;
 	virtual void set_instance_shader_uniforms_offset(int32_t p_offset) override;
 	virtual void set_cast_double_sided_shadows(bool p_enable) override;
+	virtual void set_is_this_a_gizmo(bool p_enable) override;
 
 	virtual void reset_motion_vectors() override;
 

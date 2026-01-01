@@ -228,6 +228,12 @@ void RasterizerSceneGLES3::_geometry_instance_add_surface_with_material(Geometry
 		flags |= GeometryInstanceSurface::FLAG_USES_STENCIL;
 	}
 
+	// Handling of editor only objects
+	if (ginstance->is_a_gizmo())
+	{
+		flags |= GeometryInstanceSurface::FLAG_IS_A_GIZMO;
+	}
+
 	if (has_alpha || has_read_screen_alpha || p_material->shader_data->depth_draw == GLES3::SceneShaderData::DEPTH_DRAW_DISABLED || p_material->shader_data->depth_test != GLES3::SceneShaderData::DEPTH_TEST_ENABLED) {
 		//material is only meant for alpha pass
 		flags |= GeometryInstanceSurface::FLAG_PASS_ALPHA;

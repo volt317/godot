@@ -50,6 +50,7 @@ class EditorNode3DGizmo : public Node3DGizmo {
 		Ref<SkinReference> skin_reference;
 		bool extra_margin = false;
 		Transform3D xform;
+		GeometryInstanceSurfaceDataCache flag = GeometryInstanceSurfaceDataCache::FLAG_IS_A_GIZMO;
 
 		void create_instance(Node3D *p_base, bool p_hidden = false);
 	};

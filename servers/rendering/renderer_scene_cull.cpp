@@ -582,12 +582,17 @@ void RendererSceneCull::instance_set_base(RID p_instance, RID p_base) {
 			_unpair_instance(instance);
 		}
 
+		if (instance->is_a_gizmo())
+		{
+			//TODO Volt add a modifier
+		}
+
 		if (instance->mesh_instance.is_valid()) {
 			RSG::mesh_storage->mesh_instance_free(instance->mesh_instance);
 			instance->mesh_instance = RID();
 			// no need to set instance data flag here, as it was freed above
 		}
-
+		
 		switch (instance->base_type) {
 			case RS::INSTANCE_MESH:
 			case RS::INSTANCE_MULTIMESH:
@@ -996,6 +1001,9 @@ void RendererSceneCull::instance_set_transform(RID p_instance, const Transform3D
 	_instance_queue_update(instance, true);
 }
 
+//TODO Volt: finish
+void RendererSceneCull::instance_set_context(RID p_instance,
+
 void RendererSceneCull::instance_attach_object_instance_id(RID p_instance, ObjectID p_id) {
 	Instance *instance = instance_owner.get_or_null(p_instance);
 	ERR_FAIL_NULL(instance);
@@ -1303,6 +1311,9 @@ void RendererSceneCull::instance_geometry_set_flag(RID p_instance, RS::InstanceF
 				}
 			}
 		} break;
+		case RS::INSTANCE_FLAG_IS_A_GIZMO: {
+			//TODO Volt
+		}
 		default: {
 		}
 	}

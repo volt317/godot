@@ -275,6 +275,7 @@ public:
 			FLAG_VISIBILITY_DEPENDENCY_FADE_CHILDREN = (1 << 22),
 			FLAG_GEOM_PROJECTOR_SOFTSHADOW_DIRTY = (1 << 23),
 			FLAG_IGNORE_ALL_CULLING = (1 << 24),
+			FLAG_IS_A_GIZMO = (1 << 25),
 		};
 
 		uint32_t flags = 0;
@@ -415,6 +416,8 @@ public:
 
 		bool ignore_occlusion_culling;
 		bool ignore_all_culling;
+
+		bool isGizmo;
 
 		Vector<RID> materials;
 
@@ -576,6 +579,8 @@ public:
 			lod_bias = 1.0;
 			ignore_occlusion_culling = false;
 			ignore_all_culling = false;
+			
+			isGizmo = false;
 
 			scenario = nullptr;
 

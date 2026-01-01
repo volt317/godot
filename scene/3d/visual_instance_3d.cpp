@@ -502,15 +502,15 @@ bool GeometryInstance3D::is_ignoring_occlusion_culling() {
 	return ignore_occlusion_culling;
 }
 //TODO Volt - make sure this is all set in the header too. default to false
-void Geometry3D::set_gizmo_status(bool p_is)
+void GeometryInstance3D::set_gizmo_status(bool p_gizmo)
 {
-	is_a_gizmo = p_is;
-	RS::get_singleton()->instance_geometry_set_flag(get_instance(), RS::INSTANCE_FLAG_IS_A_GIZMO, is_a_gizmo);
+	isGizmo = p_gizmo;
+	RS::get_singleton()->instance_geometry_set_flag(get_instance(), RS::INSTANCE_FLAG_IS_A_GIZMO, p_gizmo);
 }
 
 bool GeometryInstance3D::is_a_gizmo()
 {
-	return is_a_gizmo;
+	return isGizmo;
 }
 
 Ref<TriangleMesh> GeometryInstance3D::generate_triangle_mesh() const {
@@ -605,6 +605,10 @@ void GeometryInstance3D::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_aabb"), &GeometryInstance3D::get_aabb);
 
+	ClassDB::bind_method(D_METHOD("set_gizmo_status", "gizmo_status"), &GeometryInstance3D::set_gizmo_status);
+	ClassDB::bind_method(D_METHOD("is_a_gizmo"), &GeometryInstance3D::is_a_gizmo);
+
+
 	ADD_GROUP("Geometry", "");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "material_override", PROPERTY_HINT_RESOURCE_TYPE, "BaseMaterial3D,ShaderMaterial", PROPERTY_USAGE_DEFAULT), "set_material_override", "get_material_override");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "material_overlay", PROPERTY_HINT_RESOURCE_TYPE, "BaseMaterial3D,ShaderMaterial", PROPERTY_USAGE_DEFAULT), "set_material_overlay", "get_material_overlay");
@@ -614,6 +618,8 @@ void GeometryInstance3D::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::AABB, "custom_aabb", PROPERTY_HINT_NONE, "suffix:m"), "set_custom_aabb", "get_custom_aabb");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "lod_bias", PROPERTY_HINT_RANGE, "0.001,128,0.001"), "set_lod_bias", "get_lod_bias");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ignore_occlusion_culling"), "set_ignore_occlusion_culling", "is_ignoring_occlusion_culling");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "is_a_gizmo"), "set_ignore_occlusion_culling", "is_ignoring_occlusion_culling");
+
 
 	ADD_GROUP("Global Illumination", "gi_");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "gi_mode", PROPERTY_HINT_ENUM, "Disabled,Static,Dynamic"), "set_gi_mode", "get_gi_mode");

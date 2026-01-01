@@ -141,6 +141,7 @@ private:
 	float lightmap_texel_scale = 1.0f;
 	GIMode gi_mode = GI_MODE_STATIC;
 	bool ignore_occlusion_culling = false;
+	bool is_a_gizmo = false;
 
 	const StringName *_instance_uniform_get_remap(const StringName &p_name) const;
 
@@ -205,6 +206,9 @@ public:
 
 	void set_ignore_occlusion_culling(bool p_enabled);
 	bool is_ignoring_occlusion_culling();
+
+	void set_is_a_gizmo(bool p_enabled);
+	bool is_a_gizmo();
 
 	virtual Ref<TriangleMesh> generate_triangle_mesh() const;
 

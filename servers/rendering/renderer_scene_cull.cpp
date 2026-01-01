@@ -1167,6 +1167,21 @@ void RendererSceneCull::instance_set_ignore_culling(RID p_instance, bool p_enabl
 	}
 }
 
+void RendererSceneCull::instance_set_gizmo_status(RID p_instance, bool p_enabled) {
+	Instance *instance = instance_owner.get_or_null(p_instance);
+	ERR_FAIL_NULL(instance);
+	instance->isGizmo = p_enabled;
+
+	if (instance->scenario && instance->array_index >= 0) {
+		InstanceData &idata = instance->scenario->instance_data[instance->array_index];
+		if (instance->isGizmo) {
+			idata.flags |= InstanceData::FLAG_IS_A_GIZMO;
+		} else {
+			idata.flags &= ~InstanceData::FLAG_IS_A_GIZMO;
+		}
+	}
+}
+
 Vector<ObjectID> RendererSceneCull::instances_cull_aabb(const AABB &p_aabb, RID p_scenario) const {
 	Vector<ObjectID> instances;
 	Scenario *scenario = scenario_owner.get_or_null(p_scenario);
@@ -1312,7 +1327,15 @@ void RendererSceneCull::instance_geometry_set_flag(RID p_instance, RS::InstanceF
 			}
 		} break;
 		case RS::INSTANCE_FLAG_IS_A_GIZMO: {
-			//TODO Volt
+			instance->isGizmo = p_enabled;
+			if (instance->scenario && instance->array_index >= 0) {
+				InstanceData &idata = instance->scenario->instance_data[instance->array_index];
+				if (instance->isGizmo) {
+					idata.flags |= InstanceData::FLAG_IS_A_GIZMO;
+				} else {
+					idata.flags &= ~InstanceData::FLAG_IS_A_GIZMO;
+				}
+			}
 		}
 		default: {
 		}
@@ -1844,6 +1867,9 @@ void RendererSceneCull::_update_instance(Instance *p_instance) const {
 		}
 		if (p_instance->ignore_all_culling) {
 			idata.flags |= InstanceData::FLAG_IGNORE_ALL_CULLING;
+		}
+		if (p_instance->isGizmo) {
+			idata.flags |= InstanceData::FLAG_IS_A_GIZMO;
 		}
 
 		p_instance->scenario->instance_data.push_back(idata);
@@ -2907,7 +2933,8 @@ void RendererSceneCull::_scene_cull(CullData &cull_data, InstanceCullResult &cul
 						vnd->just_visible = true;
 					}
 					vnd->visible_in_frame = RSG::rasterizer->get_frame_number();
-				} else if (((1 << base_type) & RS::INSTANCE_GEOMETRY_MASK) && !(idata.flags & InstanceData::FLAG_CAST_SHADOWS_ONLY)) {
+				} else if (((1 << base_type) & RS::INSTANCE_GEOMETRY_MASK) && !(idata.flags & InstanceData::FLAG_CAST_SHADOWS_ONLY) && !(idata.flags & InstanceData::FLAG_IS_GIZMO)) 
+					{
 					bool keep = true;
 
 					if (idata.flags & InstanceData::FLAG_REDRAW_IF_VISIBLE) {

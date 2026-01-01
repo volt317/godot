@@ -10437,10 +10437,6 @@ bool Node3DEditor::is_gizmo_visible() const {
 	return gizmo.visible;
 }
 
-bool Node3DEditor::is_gizmo() const {
-	return true;
-}
-
 real_t Node3DEditor::get_translate_snap() const {
 	real_t snap_value = snap_translate_value;
 	if (Input::get_singleton()->is_key_pressed(Key::SHIFT)) {
